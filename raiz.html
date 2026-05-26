@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programa R.A.I.Z · Dra. Luana Rodrigues</title>
+<meta name="description" content="Saúde Integrativa e Neuroperformance para mulheres 35+ que sustentam tudo e estão colapsando por dentro.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Programa R.A.I.Z · Dra. Luana Rodrigues">
+<meta property="og:description" content="Não é mais um programa de saúde. É a primeira vez que alguém vai ler o seu sistema inteiro.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#16130F">
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --preto:        #16130F;
+  --cobre:        #C4763A;
+  --cobre-claro:  #D98A4E;
+  --cobre-escuro: #A05E28;
+  --creme:        #F0E4CC;
+  --cinza:        #8C8880;
+  --bege:         #9C7B5E;
+  --offwhite:     #FAF7F2;
+  --serif:        'Lora', Georgia, serif;
+  --sans:         'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--offwhite);
+  color: var(--preto);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── UTILITÁRIOS ── */
+.label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--cobre);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  display: block;
+}
+
+.divisor-cobre {
+  width: 48px;
+  height: 3px;
+  background: var(--cobre);
+  margin: 1.25rem 0;
+}
+
+/* ── HEADER FIXO ── */
+.header-fixo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 0 5%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(22,19,15,0);
+  transition: background 0.4s, border-bottom 0.4s;
+}
+
+.header-fixo.scrolled {
+  background: rgba(22,19,15,0.96);
+  border-bottom: 1px solid rgba(196,118,58,0.15);
+  backdrop-filter: blur(10px);
+}
+
+.header-logo {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--cobre);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.header-cta {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--creme);
+  border: 1px solid rgba(196,118,58,0.40);
+  padding: 9px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s, border-color 0.2s;
+}
+
+.header-fixo.scrolled .header-cta {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.header-cta:hover {
+  border-color: var(--cobre);
+  color: var(--cobre);
+}
+
+/* ── HERO ── */
+#hero {
+  background: var(--preto);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 10% 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  right: -10%;
+  top: -10%;
+  width: 65vw;
+  height: 65vw;
+  border-radius: 50%;
+  border: 1px solid rgba(196,118,58,0.07);
+  pointer-events: none;
+}
+
+#hero::after {
+  content: '';
+  position: absolute;
+  right: -5%;
+  top: -5%;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  border: 1px solid rgba(196,118,58,0.05);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 800px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-inner .label { margin-bottom: 40px; }
+
+.hero-tagline {
+  font-family: var(--serif);
+  font-size: clamp(15px, 1.8vw, 18px);
+  font-style: italic;
+  color: var(--bege);
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 20px;
+  border-left: 3px solid var(--cobre);
+  padding-left: 24px;
+}
+
+.hero-h1 {
+  font-family: var(--sans);
+  font-size: clamp(60px, 9.5vw, 112px);
+  font-weight: 800;
+  color: var(--creme);
+  line-height: 0.9;
+  letter-spacing: -3px;
+  margin: 36px 0 14px;
+}
+
+.hero-h1 span { color: var(--cobre); }
+
+.hero-sub {
+  font-family: var(--serif);
+  font-size: clamp(16px, 2vw, 20px);
+  font-style: italic;
+  color: var(--bege);
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 32px 0 52px;
+}
+
+.hero-cta-wrap {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.btn-primario {
+  display: inline-block;
+  background: var(--cobre);
+  color: var(--creme);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 20px 44px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primario:hover { background: var(--cobre-escuro); }
+
+.hero-anchor {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--cinza);
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.hero-anchor:hover { color: var(--creme); }
+
+.hero-assinatura {
+  margin-top: 64px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: rgba(140,136,128,0.6);
+  text-transform: uppercase;
+}
+
+.hero-linha-cobre {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--cobre);
+}
+
+/* ── ESPELHO ── */
+#espelho {
+  background: var(--offwhite);
+  padding: 120px 10%;
+  position: relative;
+}
+
+#espelho .barra-lateral {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--cobre);
+}
+
+.espelho-inner { max-width: 900px; }
+
+.espelho-h2 {
+  font-family: var(--sans);
+  font-size: clamp(36px, 5.5vw, 56px);
+  font-weight: 800;
+  color: var(--preto);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 52px;
+  max-width: 700px;
+}
+
+.espelho-frases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 52px;
+}
+
+.espelho-frase {
+  padding: 24px 26px;
+  border-left: 2px solid rgba(196,118,58,0.30);
+  background: rgba(196,118,58,0.04);
+  border-radius: 0 4px 4px 0;
+}
+
+.espelho-frase p {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: #3a3028;
+  line-height: 1.75;
+}
+
+.espelho-ancora {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cobre);
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(196,118,58,0.30);
+  padding-bottom: 2px;
+  display: inline-block;
+}
+
+/* ── DIAGNÓSTICO ── */
+#diagnostico {
+  background: var(--preto);
+  padding: 120px 10%;
+  position: relative;
+}
+
+.diag-inner { max-width: 1060px; width: 100%; }
+
+.diag-h2 {
+  font-family: var(--sans);
+  font-size: clamp(32px, 4.8vw, 52px);
+  font-weight: 800;
+  color: var(--creme);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 52px;
+  max-width: 720px;
+}
+
+.diag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.diag-card {
+  padding: 28px 28px 32px;
+  border: 1px solid rgba(196,118,58,0.15);
+  border-radius: 4px;
+  position: relative;
+}
+
+.diag-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--cobre);
+  opacity: 0.35;
+}
+
+.diag-num {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--cobre);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.diag-card h3 {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--creme);
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.diag-card p {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--cinza);
+  line-height: 1.75;
+}
+
+/* ── MÉTODO ── */
+#metodo {
+  background: var(--offwhite);
+  padding: 120px 10%;
+  position: relative;
+}
+
+#metodo .barra-lateral {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--cobre);
+}
+
+.metodo-inner { max-width: 1060px; width: 100%; }
+
+.metodo-h2 {
+  font-family: var(--sans);
+  font-size: clamp(30px, 4.5vw, 46px);
+  font-weight: 800;
+  color: var(--preto);
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  max-width: 700px;
+}
+
+.metodo-intro {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--bege);
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 52px;
+}
+
+.pilares-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 52px;
+}
+
+.pilar-card {
+  background: var(--preto);
+  padding: 28px 22px 32px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pilar-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--cobre);
+}
+
+.pilar-letra {
+  font-family: var(--sans);
+  font-size: 60px;
+  font-weight: 800;
+  color: var(--cobre);
+  line-height: 1;
+  margin-bottom: 16px;
+  opacity: 0.88;
+}
+
+.pilar-nome {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--creme);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.pilar-desc {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--bege);
+  line-height: 1.65;
+}
+
+.metodo-tagline {
+  font-family: var(--serif);
+  font-size: clamp(16px, 2vw, 19px);
+  font-style: italic;
+  color: var(--bege);
+  border-left: 3px solid var(--cobre);
+  padding-left: 24px;
+  line-height: 1.65;
+  max-width: 580px;
+}
+
+/* ── TRANSFORMAÇÃO ── */
+#transformacao {
+  background: var(--preto);
+  padding: 120px 10%;
+  position: relative;
+}
+
+.transf-inner { max-width: 1060px; width: 100%; }
+
+.transf-h2 {
+  font-family: var(--sans);
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 800;
+  color: var(--creme);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 52px;
+  max-width: 740px;
+}
+
+.transf-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.transf-col h3 {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid;
+}
+
+.transf-col.antes h3 {
+  color: var(--cinza);
+  border-color: rgba(140,136,128,0.25);
+}
+
+.transf-col.depois h3 {
+  color: var(--cobre);
+  border-color: var(--cobre);
+}
+
+.transf-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.transf-marca {
+  font-family: var(--sans);
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 18px;
+}
+
+.transf-col.antes .transf-marca { color: rgba(140,136,128,0.4); }
+.transf-col.depois .transf-marca { color: var(--cobre); }
+
+.transf-item p {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.transf-col.antes .transf-item p { color: rgba(140,136,128,0.75); }
+.transf-col.depois .transf-item p { color: var(--creme); }
+
+/* ── QUALIFICAÇÃO ── */
+#qualificacao {
+  background: var(--offwhite);
+  padding: 120px 10%;
+  position: relative;
+}
+
+#qualificacao .barra-lateral {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--cobre);
+}
+
+.qual-inner { max-width: 1060px; width: 100%; }
+
+.qual-h2 {
+  font-family: var(--sans);
+  font-size: clamp(30px, 4.5vw, 48px);
+  font-weight: 800;
+  color: var(--preto);
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 52px;
+  max-width: 720px;
+}
+
+.qual-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.qual-col-titulo {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid;
+  display: block;
+}
+
+.qual-col.sim .qual-col-titulo {
+  color: var(--cobre);
+  border-color: var(--cobre);
+}
+
+.qual-col.nao .qual-col-titulo {
+  color: var(--cinza);
+  border-color: rgba(140,136,128,0.25);
+}
+
+.qual-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.qual-marca {
+  font-family: var(--sans);
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 18px;
+}
+
+.qual-col.sim .qual-marca { color: var(--cobre); }
+.qual-col.nao .qual-marca { color: rgba(140,136,128,0.5); }
+
+.qual-item p {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.qual-col.sim .qual-item p { color: #3a3028; }
+.qual-col.nao .qual-item p { color: var(--cinza); }
+
+.qual-nota {
+  margin-top: 52px;
+  padding: 28px 32px;
+  background: rgba(196,118,58,0.07);
+  border-left: 3px solid var(--cobre);
+}
+
+.qual-nota p {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--bege);
+  line-height: 1.75;
+}
+
+/* ── PROCESSO ── */
+#processo {
+  background: var(--preto);
+  padding: 120px 10%;
+}
+
+.processo-inner { max-width: 1060px; width: 100%; }
+
+.processo-h2 {
+  font-family: var(--sans);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  color: var(--creme);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  max-width: 680px;
+}
+
+.processo-sub {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--bege);
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 52px;
+}
+
+.passos {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 700px;
+}
+
+.passo {
+  display: flex;
+  gap: 28px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(196,118,58,0.10);
+  position: relative;
+}
+
+.passo:last-child { border-bottom: none; }
+
+.passo-num {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--cobre);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  padding-top: 3px;
+  width: 36px;
+}
+
+.passo-conteudo h3 {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--creme);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.passo-conteudo p {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--cinza);
+  line-height: 1.75;
+}
+
+/* ── CTA FINAL ── */
+#cta {
+  background: var(--cobre);
+  padding: 120px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+#cta::before {
+  content: '';
+  position: absolute;
+  right: -8%;
+  bottom: -10%;
+  width: 55vw;
+  height: 55vw;
+  border-radius: 50%;
+  border: 2px solid rgba(22,19,15,0.08);
+  pointer-events: none;
+}
+
+#cta::after {
+  content: '';
+  position: absolute;
+  right: -4%;
+  bottom: -5%;
+  width: 36vw;
+  height: 36vw;
+  border-radius: 50%;
+  border: 2px solid rgba(22,19,15,0.05);
+  pointer-events: none;
+}
+
+.cta-inner {
+  max-width: 760px;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-inner .label {
+  color: rgba(22,19,15,0.50);
+  margin-bottom: 36px;
+}
+
+.cta-h2 {
+  font-family: var(--sans);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  color: var(--preto);
+  line-height: 0.98;
+  letter-spacing: -2px;
+  margin-bottom: 28px;
+  max-width: 700px;
+}
+
+.cta-frase {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-style: italic;
+  color: rgba(22,19,15,0.68);
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 52px;
+}
+
+.btn-cta-escuro {
+  display: inline-block;
+  background: var(--preto);
+  color: var(--creme);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 22px 52px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.btn-cta-escuro:hover { background: #0d0c0a; }
+
+.cta-nota {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(22,19,15,0.45);
+  letter-spacing: 0.5px;
+  margin-bottom: 52px;
+}
+
+.cta-assinatura {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: rgba(22,19,15,0.42);
+  text-transform: uppercase;
+}
+
+.cta-linha {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(22,19,15,0.12);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--preto);
+  padding: 40px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid rgba(196,118,58,0.10);
+}
+
+.footer-logo {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--cobre);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.footer-meta {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(140,136,128,0.55);
+  letter-spacing: 0.5px;
+}
+
+/* ── RESPONSIVO ── */
+@media (max-width: 900px) {
+  .espelho-frases,
+  .diag-grid,
+  .transf-cols,
+  .qual-cols {
+    grid-template-columns: 1fr;
+  }
+  .pilares-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero, #espelho, #diagnostico, #metodo,
+  #transformacao, #qualificacao, #processo, #cta {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+  .pilares-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-h1 {
+    letter-spacing: -2px;
+  }
+  .hero-cta-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .btn-primario, .btn-cta-escuro {
+    width: 100%;
+    text-align: center;
+  }
+  .header-cta { display: none; }
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ── ANIMAÇÕES ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER FIXO -->
+<header class="header-fixo" id="header">
+  <a href="#hero" class="header-logo">R.A.I.Z</a>
+  <a href="#cta" class="header-cta">Solicitar avaliação</a>
+</header>
+
+
+<!-- ═══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <span class="label">Saúde Integrativa e Neuroperformance</span>
+    <p class="hero-tagline fade-in">
+      Alta responsabilidade sem recuperação vira modo sobrevivência com maquiagem de produtividade.
+    </p>
+    <h1 class="hero-h1 fade-in">Programa<br><span>R.A.I.Z</span></h1>
+    <p class="hero-sub fade-in">
+      Não é mais um programa de saúde. É a primeira vez que alguém vai ler o seu sistema inteiro e trabalhar a base que sustenta tudo que você faz.
+    </p>
+    <div class="hero-cta-wrap fade-in">
+      <a href="#cta" class="btn-primario">Solicitar minha avaliação</a>
+      <a href="#espelho" class="hero-anchor">Entender se é para mim ↓</a>
+    </div>
+    <p class="hero-assinatura">Dra. Luana Rodrigues &nbsp;·&nbsp; Saúde Integrativa e Neuroperformance</p>
+  </div>
+  <div class="hero-linha-cobre"></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     ESPELHO: IDENTIFICAÇÃO
+════════════════════════════════════════ -->
+<section id="espelho">
+  <div class="barra-lateral"></div>
+  <div class="espelho-inner">
+    <span class="label fade-in">O que trouxe você até aqui</span>
+    <div class="divisor-cobre fade-in"></div>
+    <h2 class="espelho-h2 fade-in">Você sustenta tudo.<br>Menos você mesma.</h2>
+    <div class="espelho-frases">
+      <div class="espelho-frase fade-in">
+        <p>"Meus exames estão normais. Mas eu não estou bem. E já não sei como explicar isso para ninguém."</p>
+      </div>
+      <div class="espelho-frase fade-in">
+        <p>"Já tentei dieta, treino, suplemento, terapia. Nada conectou o sistema inteiro. Parece que estou sempre recomeçando do zero."</p>
+      </div>
+      <div class="espelho-frase fade-in">
+        <p>"Tenho energia para tudo que é dos outros. Nenhuma para mim. E nem me lembro mais de quando isso mudou."</p>
+      </div>
+      <div class="espelho-frase fade-in">
+        <p>"Chego no fim do dia e sinto que dei tudo para todo mundo. Sobrou nada para mim."</p>
+      </div>
+    </div>
+    <p class="espelho-ancora fade-in">Se você se reconheceu em pelo menos dois desses pontos, continue lendo. ↓</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     DIAGNOSTICO: O QUE ESTÁ ACONTECENDO
+════════════════════════════════════════ -->
+<section id="diagnostico">
+  <div class="diag-inner">
+    <span class="label fade-in">O que está acontecendo de verdade</span>
+    <div class="divisor-cobre fade-in"></div>
+    <h2 class="diag-h2 fade-in">Isso não é fraqueza.<br>É o sistema em modo sobrevivência.</h2>
+    <div class="diag-grid">
+      <div class="diag-card fade-in">
+        <span class="diag-num">01 &nbsp; Sistema nervoso</span>
+        <h3>Alerta crônico não é sensação. É fisiologia.</h3>
+        <p>Seu corpo aprendeu a funcionar em modo de ameaça permanente. Qualquer pausa parece perigosa. Não é falta de disciplina. É fisiologia que nunca foi tratada na raiz.</p>
+      </div>
+      <div class="diag-card fade-in">
+        <span class="diag-num">02 &nbsp; Identidade apagada</span>
+        <h3>Você virou função. A mulher sumiu.</h3>
+        <p>Mãe, líder, filha, sócia. A agenda engoliu quem você é. E chegou um ponto em que nem dói mais, porque doer também exige energia que você não tem.</p>
+      </div>
+      <div class="diag-card fade-in">
+        <span class="diag-num">03 &nbsp; Rotina impossível</span>
+        <h3>Nenhuma dica de internet cabe na sua vida real.</h3>
+        <p>Você não precisa de mais uma estratégia genérica. Precisa de um protocolo desenhado para a vida que você realmente tem. Não para uma rotina que não existe.</p>
+      </div>
+      <div class="diag-card fade-in">
+        <span class="diag-num">04 &nbsp; Raiz não tratada</span>
+        <h3>Sintomas reais. Exames normais.</h3>
+        <p>Porque ninguém ainda leu o seu sistema inteiro. Só os fragmentos que couberam nos 20 minutos de consulta. A raiz continua lá, sem ser tratada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     MÉTODO R.A.I.Z
+════════════════════════════════════════ -->
+<section id="metodo">
+  <div class="barra-lateral"></div>
+  <div class="metodo-inner">
+    <span class="label fade-in">O método</span>
+    <div class="divisor-cobre fade-in"></div>
+    <h2 class="metodo-h2 fade-in">Quatro meses. Quatro pilares.<br>Uma reorganização real.</h2>
+    <p class="metodo-intro fade-in">
+      O R.A.I.Z não trata o sintoma. Lê o sistema completo. Cada pilar foi construído para eliminar um ponto de colapso, na sequência certa, no ritmo que a sua vida real comporta.
+    </p>
+    <div class="pilares-grid">
+      <div class="pilar-card fade-in">
+        <div class="pilar-letra">R</div>
+        <span class="pilar-nome">Rastrear</span>
+        <p class="pilar-desc">O ponto de entrada nunca é o sintoma. É o sistema. Leitura completa de rotina, história, padrões e fisiologia antes de qualquer intervenção.</p>
+      </div>
+      <div class="pilar-card fade-in">
+        <div class="pilar-letra">A</div>
+        <span class="pilar-nome">Autorregular</span>
+        <p class="pilar-desc">Nenhuma estratégia sustenta em cima de sistema nervoso em alerta crônico. Sono, intestino, estresse e ritmo circadiano precisam ser reorganizados antes de qualquer outra coisa.</p>
+      </div>
+      <div class="pilar-card fade-in">
+        <div class="pilar-letra">I</div>
+        <span class="pilar-nome">Integrar</span>
+        <p class="pilar-desc">Saúde precisa caber na sua vida real, não em rotina de internet. Protocolo possível: constância sustentável, não perfeição que dura duas semanas.</p>
+      </div>
+      <div class="pilar-card fade-in">
+        <div class="pilar-letra">Z</div>
+        <span class="pilar-nome">Zelar</span>
+        <p class="pilar-desc">Autonomia e plano de continuidade. O trabalho não termina na última sessão. Sem essa etapa, o padrão anterior retorna quando a pressão aumenta.</p>
+      </div>
+    </div>
+    <p class="metodo-tagline fade-in">"O método não trata o sintoma. Lê o sistema completo. Uma mulher que entende o próprio sistema não precisa de força de vontade para funcionar."</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     TRANSFORMACAO: ANTES E DEPOIS
+════════════════════════════════════════ -->
+<section id="transformacao">
+  <div class="transf-inner">
+    <span class="label fade-in">O que muda de verdade</span>
+    <div class="divisor-cobre fade-in"></div>
+    <h2 class="transf-h2 fade-in">Em quatro meses você para de funcionar por força<br>e começa a funcionar por base.</h2>
+    <div class="transf-cols">
+      <div class="transf-col antes fade-in">
+        <h3>Onde você está hoje</h3>
+        <div class="transf-item"><span class="transf-marca">×</span><p>Acorda cansada mesmo depois de dormir</p></div>
+        <div class="transf-item"><span class="transf-marca">×</span><p>Vive no limite sem saber onde está o buraco</p></div>
+        <div class="transf-item"><span class="transf-marca">×</span><p>Tenta recomeçar sozinha e volta à estaca zero</p></div>
+        <div class="transf-item"><span class="transf-marca">×</span><p>Não reconhece mais o próprio corpo</p></div>
+        <div class="transf-item"><span class="transf-marca">×</span><p>Sente que está desaparecendo por dentro</p></div>
+        <div class="transf-item"><span class="transf-marca">×</span><p>Tem tudo. Menos energia para viver o que construiu.</p></div>
+      </div>
+      <div class="transf-col depois fade-in">
+        <h3>Onde você chega</h3>
+        <div class="transf-item"><span class="transf-marca">✓</span><p>Sabe ler o próprio sistema antes do colapso chegar</p></div>
+        <div class="transf-item"><span class="transf-marca">✓</span><p>Dorme, recupera e acorda funcional de verdade</p></div>
+        <div class="transf-item"><span class="transf-marca">✓</span><p>Tem protocolo que cabe na sua vida real, não na ideal</p></div>
+        <div class="transf-item"><span class="transf-marca">✓</span><p>Reconecta com quem você é fora das funções</p></div>
+        <div class="transf-item"><span class="transf-marca">✓</span><p>Tem base fisiológica e rotina que se sustenta sem esforço de guerra</p></div>
+        <div class="transf-item"><span class="transf-marca">✓</span><p>Tem saúde como patrimônio. Não como promessa que não sai do papel.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     QUALIFICACAO: PARA QUEM É
+════════════════════════════════════════ -->
+<section id="qualificacao">
+  <div class="barra-lateral"></div>
+  <div class="qual-inner">
+    <span class="label fade-in">Perfil do programa</span>
+    <div class="divisor-cobre fade-in"></div>
+    <h2 class="qual-h2 fade-in">Esse programa não é para qualquer mulher.<br>Foi construído para um perfil específico.</h2>
+    <div class="qual-cols">
+      <div class="qual-col sim fade-in">
+        <span class="qual-col-titulo">Para quem é</span>
+        <div class="qual-item"><span class="qual-marca">✓</span><p>Mulher 35+ com alta responsabilidade: mãe, líder, empreendedora ou as três ao mesmo tempo</p></div>
+        <div class="qual-item"><span class="qual-marca">✓</span><p>Já investiu em saúde antes. Dieta, treino, consultas. Nada conectou o sistema inteiro.</p></div>
+        <div class="qual-item"><span class="qual-marca">✓</span><p>Tem exames normais mas sente que não está bem de verdade</p></div>
+        <div class="qual-item"><span class="qual-marca">✓</span><p>Quer método, não dica. Quer raiz, não sintoma.</p></div>
+        <div class="qual-item"><span class="qual-marca">✓</span><p>Tem capacidade de investir e histórico de investimento em desenvolvimento</p></div>
+        <div class="qual-item"><span class="qual-marca">✓</span><p>Executa. Não precisa ser empurrada para agir quando decide que quer.</p></div>
+      </div>
+      <div class="qual-col nao fade-in">
+        <span class="qual-col-titulo">Não é para quem</span>
+        <div class="qual-item"><span class="qual-marca">×</span><p>Quer uma solução rápida sem mudar padrões estruturais</p></div>
+        <div class="qual-item"><span class="qual-marca">×</span><p>Busca validação constante ou precisa de permissão para tomar decisão</p></div>
+        <div class="qual-item"><span class="qual-marca">×</span><p>Não está disposta a colocar a própria saúde como prioridade real, não só como intenção</p></div>
+        <div class="qual-item"><span class="qual-marca">×</span><p>Quer controlar o método em vez de confiar no processo</p></div>
+        <div class="qual-item"><span class="qual-marca">×</span><p>Está buscando o enésimo começo sem comprometimento com a continuidade</p></div>
+      </div>
+    </div>
+    <div class="qual-nota fade-in">
+      <p>"Esse programa foi construído para a mulher que já sabe que tem um problema de sistema, não de disciplina. Que está aguentando por inércia. E que quer, de fato, mudar isso."</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     PROCESSO: COMO FUNCIONA
+════════════════════════════════════════ -->
+<section id="processo">
+  <div class="processo-inner">
+    <span class="label fade-in">Como funciona</span>
+    <div class="divisor-cobre fade-in"></div>
+    <h2 class="processo-h2 fade-in">O próximo passo é uma conversa.<br>Não uma compra.</h2>
+    <p class="processo-sub fade-in">
+      Antes de qualquer decisão, você passa por uma avaliação. Porque o R.A.I.Z só aceita quem o R.A.I.Z pode realmente transformar.
+    </p>
+    <div class="passos">
+      <div class="passo fade-in">
+        <span class="passo-num">01</span>
+        <div class="passo-conteudo">
+          <h3>Você solicita a avaliação</h3>
+          <p>Preenche um formulário breve com informações sobre o seu contexto atual. Isso nos permite entender se você está no perfil do programa antes de qualquer conversa.</p>
+        </div>
+      </div>
+      <div class="passo fade-in">
+        <span class="passo-num">02</span>
+        <div class="passo-conteudo">
+          <h3>Recebe retorno em até 48 horas</h3>
+          <p>Analisamos sua aplicação e, se houver compatibilidade de perfil, agendamos uma conversa estratégica individual. Sem compromisso nesse momento.</p>
+        </div>
+      </div>
+      <div class="passo fade-in">
+        <span class="passo-num">03</span>
+        <div class="passo-conteudo">
+          <h3>Conversa estratégica com a Dra. Luana</h3>
+          <p>Uma sessão para mapear o seu sistema, entender onde está a raiz da desregulação e apresentar o que o programa pode fazer especificamente por você. Você decide depois.</p>
+        </div>
+      </div>
+      <div class="passo fade-in">
+        <span class="passo-num">04</span>
+        <div class="passo-conteudo">
+          <h3>Decisão com clareza total</h3>
+          <p>Você entra quando tiver clareza. A conversa existe para isso: para você entender o que o programa faz e o que ele exige de você.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     CTA FINAL
+════════════════════════════════════════ -->
+<section id="cta">
+  <div class="cta-inner">
+    <span class="label">O próximo passo é seu</span>
+    <h2 class="cta-h2">Você já sabe o que está acontecendo.<br>O que falta é a saída certa.</h2>
+    <p class="cta-frase">
+      Se você chegou até aqui e se reconheceu, a avaliação é o lugar certo para continuar essa conversa.
+    </p>
+    <a href="SEU_LINK_DE_FORMULÁRIO_AQUI" class="btn-cta-escuro">Solicitar minha avaliação R.A.I.Z</a>
+    <span class="cta-nota">Vagas limitadas por ciclo · Aceite condicionado a perfil</span>
+    <p class="cta-assinatura">Dra. Luana Rodrigues &nbsp;·&nbsp; Saúde Integrativa e Neuroperformance</p>
+  </div>
+  <div class="cta-linha"></div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">R.A.I.Z</span>
+  <span class="footer-meta">Dra. Luana Rodrigues · Saúde Integrativa e Neuroperformance · Vitória da Conquista, BA</span>
+</footer>
+
+
+<script>
+/* ── HEADER scroll ── */
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 80);
+}, { passive: true });
+
+/* ── FADE-IN ao scroll ── */
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+fadeEls.forEach(el => observer.observe(el));
+
+/* ── Disparo imediato para elementos visíveis no carregamento ── */
+window.addEventListener('load', () => {
+  fadeEls.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add('visible');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
